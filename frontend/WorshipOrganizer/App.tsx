@@ -22,10 +22,7 @@ const App = () => {
       <RootStack.Navigator>
         <RootStack.Screen name="Login" component={LoginScreen} />
       </RootStack.Navigator>
-
     </NavigationContainer>
-
-
   );
 };
 
