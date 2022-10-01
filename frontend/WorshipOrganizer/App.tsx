@@ -18,11 +18,8 @@ const RootStack = createNativeStackNavigator();
 const App = () => {
   
   return (
-    <NavigationContainer>
-      <RootStack.Navigator>
-        <RootStack.Screen name="Login" component={LoginScreen} />
-      </RootStack.Navigator>
-    </NavigationContainer>
+    <LoginScreen/>
+    
   );
 };
 
