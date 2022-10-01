@@ -15,21 +15,53 @@ import {
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { EyeOff } from "react-native-feather";
+import { EyeOff, CheckCircle } from "react-native-feather";
 import { faUser, faLock} from '@fortawesome/free-solid-svg-icons';
 
 
 const LoginScreen = () => {
 
+    const [data, setData] = React.useState({
+        email: '',
+        password: '',
+        check_textInputChange: false,
+        secureTextEntry: true
+    })
+    
+    //TODO: proper user name format verification
+    const textInputChange = (val: string) => {
+    
+        if (val.length !== 0) {
+            setData({
+                ... data,
+                email: val,
+                check_textInputChange: true 
+            })
+        }
+        else {
+            setData({
+                ... data,
+                email: val,
+                check_textInputChange: false 
+            })
+        }
+    }
+
+    //TODO: add password onChange to state variables
+    //TODO: add toggle to hide password characters
+
     return (
         <>
-        <StatusBar backgroundColor="#9c38d1"/>
+        <StatusBar backgroundColor="#9c38d1" barStyle="light-content"/>
         <View style={styles.container}>
 
             <View style={styles.header}>
                 <Text style={styles.text_header}>Welcome!</Text>
             </View>
-            <View style={styles.footer}>
+            <Animatable.View 
+                animation="fadeInUpBig"
+                style={styles.footer}>
+                    
                 <Text style={styles.text_footer}>Email</Text>
                 <View style={styles.action} >
                     <FontAwesomeIcon 
@@ -38,11 +70,23 @@ const LoginScreen = () => {
                         size={20}
                     />
                     <TextInput
-                    placeholder='Your Email'
-                    style={styles.textInput}
-                    autoCapitalize="none"
+                        placeholder='Your Email'
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={(val) => textInputChange(val)}
                     />
-                   <EyeOff />
+
+                    {data.check_textInputChange ? 
+                    <Animatable.View
+                    animation="bounceIn">
+                        
+                        <CheckCircle 
+                            stroke={"#9c38d1"}
+                            height={20}
+                            width={20}
+                        />
+                    </Animatable.View>
+                    : null }
                 </View>
 
                 <Text style={[styles.text_footer, {marginTop: 35}]}>Password</Text>
@@ -88,7 +132,7 @@ const LoginScreen = () => {
                         >Create Account</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </Animatable.View>
         </View>
         </>
     )
